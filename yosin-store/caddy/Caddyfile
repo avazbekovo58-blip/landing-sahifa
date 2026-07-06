@@ -1,0 +1,27 @@
+# Caddy — automatic HTTPS (Let's Encrypt) for the Yosin Store domain.
+# Serves the Mini App static build and reverse-proxies the API + n8n editor.
+{$DOMAIN} {
+    encode gzip
+
+    # Mini App HTTP API  ->  n8n webhooks
+    handle /api/* {
+        reverse_proxy n8n:5678
+    }
+
+    # Telegram bot webhook  ->  n8n
+    handle /webhook/* {
+        reverse_proxy n8n:5678
+    }
+
+    # n8n editor UI (protect with basic auth or IP allowlist in production!)
+    handle /n8n/* {
+        reverse_proxy n8n:5678
+    }
+
+    # Mini App SPA — static files with client-side routing fallback
+    handle {
+        root * /srv/miniapp
+        try_files {path} /index.html
+        file_server
+    }
+}
