@@ -60,6 +60,19 @@ Telegram Mini App sifatida ochilganda `telegram-web-app.js` avtomatik ishlaydi (
 brauzerda no-op). Backend tayyor bo'lgach `.env`da `VITE_API_BASE=https://<domain>/api`
 qo'ying — UI kodi o'zgarmaydi, real API ishga tushadi.
 
+### Admin panel
+
+Xuddi shu ilova ichida himoyalangan `/admin` route (`http://localhost:5173/#/admin`, yoki
+Profil → "Admin panel"). **Demo parol: `demo`**. Bo'limlar: Dashboard (bugun/hafta/oy sotuv +
+7 kunlik grafik), Mahsulotlar (qo'shish/tahrirlash/o'chirish — variant narx/stok, ko'rinish
+toggle), Kategoriyalar, Buyurtmalar (holatni o'zgartirish), Savollar (javob berish),
+Broadcast, Sozlamalar. Demoda o'zgarishlar xotirada; jonli rejimda har biri `/admin/*` API
+chaqiruviga bog'lanadi.
+
+> **Xavfsizlik:** demo parol faqat ko'rgazma uchun. Jonli rejimda admin auth **serverda**
+> (login/parol yoki Telegram allowlist) va barcha `/admin` endpointlar himoyalangan —
+> client flag hech qachon huquq bermaydi.
+
 ## To'liq stack (VPS)
 
 ```bash
@@ -128,8 +141,9 @@ yangi ma'lumot + sozlama, yangi kod emas.**
 | 3. API contract + initData validatsiya (client + n8n Code node) | ✅ (frontend + validator; webhook'lar keyin) |
 | 4. Mini App (React) — dizayn tizimi + barcha ekranlar | ✅ (demo ma'lumot bilan to'liq ishlaydi) |
 | 5. n8n: Telegram bot + AI Agent + tool sub-workflowlar | ⏳ hujjatlashtirilgan (system-prompt + guide), workflow JSON keyin |
-| 6. Admin panel + webhook'lar + bildirishnoma + eskalatsiya | ⏳ contract + schema tayyor |
+| 6. Admin panel (UI) + bildirishnoma + eskalatsiya + bloklash | ✅ panel UI to'liq (demo); webhook'lar §5 bilan yig'iladi |
 | 7. Deploy: HTTPS, Telegram webhook, backup | ⏳ compose + Caddy tayyor, VPS'da sozlanadi |
 
-Keyingi ish: n8n editorda §5/§6 workflowlarni yig'ish (schema, contract va AI prompt
-tayyor), so'ng `VITE_API_BASE`ni jonli API'ga qaratib demoni real backendga ulash.
+Keyingi ish: n8n editorda §5 workflowlarni va admin webhook'larni yig'ish (schema, contract,
+AI prompt va admin UI tayyor), so'ng `VITE_API_BASE`ni jonli API'ga qaratib demoni real
+backendga ulash.

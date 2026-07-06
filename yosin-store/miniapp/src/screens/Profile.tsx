@@ -47,6 +47,7 @@ export function Profile() {
           <Row label="Buyurtmalarim" onClick={() => nav('/orders')} />
           <Row label="Yetkazish manzillari" />
           <Row label="Yordam va aloqa" />
+          <Row label="Admin panel (demo)" onClick={() => nav('/admin')} />
         </div>
 
         {/* language */}
