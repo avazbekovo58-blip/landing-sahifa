@@ -50,9 +50,20 @@ docker compose ps
 Uchala xizmat `running` (yoki `healthy`) bo'lsa — yaxshi.
 
 ### 1.3. n8n'ni ochish
-Brauzerda oching:
-- Domen bilan: `https://<domen>/n8n/`
-- Yoki test uchun kompyuterda: `http://localhost:5678/`
+Brauzerda oching (test uchun eng oson yo'l):
+
+**`http://localhost:5678/`**
+
+> Bu ishlashi uchun `docker-compose.yml` da n8n `5678` portini ochishi kerak — bu allaqachon
+> sozlangan (`ports: - "5678:5678"`). Agar `localhost:5678` ochilmasa: `docker compose ps` da
+> n8n `running` ekanini tekshiring, va `docker compose logs n8n` ga qarang.
+
+VPS'da (haqiqiy domen bilan) ishlaganda n8n internetga ochiq turmasligi uchun portni
+faqat localhostga bog'lang (`127.0.0.1:5678:5678`) va SSH-tunnel orqali kiring:
+```bash
+ssh -L 5678:127.0.0.1:5678 user@<vps-ip>
+```
+so'ng o'z brauzeringizda yana `http://localhost:5678/`.
 
 Birinchi kirishda n8n **admin akkaunt** so'raydi (email + parol). Bu n8n'ning o'z egasi
 akkaunti — o'ylab yozing va saqlab qo'ying.

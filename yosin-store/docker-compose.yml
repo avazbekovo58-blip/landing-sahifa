@@ -30,6 +30,11 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
+    ports:
+      # n8n editorga to'g'ridan kirish (test: http://localhost:5678).
+      # Ishlab chiqarishda (VPS) buni faqat localhostga bog'lang: "127.0.0.1:5678:5678"
+      # va SSH-tunnel orqali kiring — editor internetga ochiq turmasin.
+      - "5678:5678"
     environment:
       # --- n8n core ---
       N8N_HOST: ${DOMAIN}
